@@ -19,17 +19,17 @@ class CNullTypeList {};
 //------------------------------------------------------------------------------
 
 template <class TList, unsigned int index, typename DefaultType = CNullTypeList>
-struct TypeAtNonStrict {
+class TypeAtNonStrict {
     typedef DefaultType Result;
 };
 
 template <class Head, class Tail, typename DefaultType>
-struct TypeAtNonStrict<CTypeList<Head, Tail>, 0, DefaultType> {
+class TypeAtNonStrict<CTypeList<Head, Tail>, 0, DefaultType> {
     typedef Head Result;
 };
 
 template <class Head, class Tail, unsigned int i, typename DefaultType>
-struct TypeAtNonStrict<CTypeList<Head, Tail>, i, DefaultType> {
+class TypeAtNonStrict<CTypeList<Head, Tail>, i, DefaultType> {
     typedef typename TypeAtNonStrict<Tail, i - 1, DefaultType>::Result Result;
 };
 
