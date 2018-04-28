@@ -24,10 +24,7 @@ public:
   
     template <typename F>
     CFunctor( const F& f ) :
-        callableObject( new CCallable<CFunctor, F>(f) )
-    {
-        
-    }
+        callableObject( new CCallable<CFunctor, F>(f) ) { }
   
     ~CFunctor() {
       delete callableObject;
