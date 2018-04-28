@@ -6,6 +6,7 @@
 
 template <class H, class T>
 class CTypeList {
+
 public:
     typedef H head;
     typedef T tail;
