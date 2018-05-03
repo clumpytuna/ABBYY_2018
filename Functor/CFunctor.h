@@ -44,8 +44,7 @@ private:
     
     // Интерфейс для вызываемого объекта без параметров
     template <typename ResType>
-    class ICallable<ResType, NullType> {
-        
+    class ICallable<ResType, NullType> {   
     public:
         virtual ResType operator()() const = 0;
         virtual ~ICallable() {}
@@ -54,7 +53,6 @@ private:
     // Интерфейс для вызываемого объекта с 1 параметром
     template <typename ResType, typename ParameterType>
     class ICallable<ResType, TYPELIST_1( ParameterType )> {
-        
     public:
         virtual ResType operator()( ParameterType ) const = 0;
         virtual ~ICallable() {}
@@ -63,7 +61,6 @@ private:
     // Интерфейс для вызываемого объекта с 2 параметроми
     template <typename ResType, typename ParameterTypeFirst, typename ParameterTypeSecond>
     class ICallable<ResType, TYPELIST_2( ParameterTypeFirst, ParameterTypeSecond )> {
-        
     public:
         virtual ResType operator()( ParameterTypeFirst, ParameterTypeSecond ) const = 0;
         virtual ~ICallable() {}
