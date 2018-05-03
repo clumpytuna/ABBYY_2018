@@ -22,7 +22,7 @@ class NullType {};
 // третьим всегда передается тип, возращаемый по умолчанию
 // Пример использования:
 // typedef typename GetTypeAt<TypeList, 1, NullType>::Result FirstParameterType;
-// Теперь FirstParameterType - это второй элемент TypeList
+// теперь FirstParameterType - это второй элемент TypeList
 template <class TList, unsigned int index, typename DefaultType = NullType>
 class GetTypeAt{
 public:
