@@ -25,12 +25,11 @@ public:
     CFunctor( const Callable& f ) : callableObject( new CCallable<CFunctor, Callable > (f) ) {}
     ~CFunctor() { delete callableObject; }
     
-    // В качестве присваиваемых объектов могут быть:
-    // классы с переопределенным параметром (), методы, функции
+    // Оператор присваивания помещает функцию, функтор или метод в класс
     template <typename Callable>
     void operator =(const Callable& f);
     
-    // Определяем оператор () для каждого количества аргументов меньшего фиксированного N
+    // Вызов функции, которую мы храним
     ResultType operator()() const;
     
     ResultType operator()( FirstParameterType parameter ) const;
