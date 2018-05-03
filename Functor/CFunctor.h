@@ -95,8 +95,6 @@ private:
     };
 };
 
-
-
 template<class ResultType, class TypeList>
 template <typename Callable>
 void CFunctor<ResultType, TypeList>::operator =( const Callable& f )
