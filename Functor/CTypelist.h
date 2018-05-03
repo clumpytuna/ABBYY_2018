@@ -6,8 +6,8 @@
 
 
 // Обертки для списка параметров
-// Использовать следующим образом (пример для функции с двумя параметрами):
-// CFunctor<void, TYPELIST_2(int, double)> f(&function)
+// Использовать следующим образом (пример для функции с списка с двумя параметрами):
+// TYPELIST_2(int, double)
 
 #define TYPELIST_1(T1) CTypeList<T1, NullType >
 #define TYPELIST_2(T1, T2) CTypeList<T1, TYPELIST_1(T2) >
