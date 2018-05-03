@@ -29,7 +29,7 @@ public:
     template <typename Callable>
     void operator =(const Callable& f);
     
-    // Вызов функции
+    // Вызывает функцию, функтор или метод.
     ResultType operator()() const;
     
     ResultType operator()( FirstParameterType parameter ) const;
@@ -69,21 +69,20 @@ private:
         virtual ~ICallable() {}
     };
     
-    // Вызываемый объект. Определяем в нем оператор () для всевозможных количеств аргумента
+    // Класс вызываемого объекта. Определяем в нем оператор () для всевозможных количеств аргумента
     // до фиксированного N.
     template <class ParentFunctor,  typename Callable>
     class CCallable: public ICallable< ResultType, TypeList > {
     public:
         CCallable( const Callable& F ) : callableObject( F ) {}
         
+        // Вызывает функцию, функтор или метод
         ResultType operator()() const {
             return callableObject();
         }
-        
         ResultType operator()( typename ParentFunctor::FirstParameterType firstParameter ) const {
             return callableObject( firstParameter );
         }
-        
         ResultType operator()( typename ParentFunctor::FirstParameterType firstParameter,
                                typename ParentFunctor::SecondParameterType secondParameter ) const {
             return callableObject( firstParameter, secondParameter );
