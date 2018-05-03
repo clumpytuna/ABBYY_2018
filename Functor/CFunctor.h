@@ -29,7 +29,7 @@ public:
     template <typename Callable>
     void operator =(const Callable& f);
     
-    // Вызов функции, которую мы храним
+    // Вызов функции
     ResultType operator()() const;
     
     ResultType operator()( FirstParameterType parameter ) const;
