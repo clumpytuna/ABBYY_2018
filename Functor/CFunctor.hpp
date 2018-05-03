@@ -1,0 +1,135 @@
+// Автор: Михаил Анухин
+// Описание: Файл содержит имплементацию класса реализующего возможности функтора.
+
+#ifndef functor_hpp
+#define functor_hpp
+
+// Обертки для списка параметров
+// Использовать следующим образом (пример для функции с двумя параметрами):
+// CFunctor<void, TYPELIST_2(int, double)> f(&function)
+
+#define TYPELIST_1(T1) CTypeList<T1, NullType>
+#define TYPELIST_2(T1, T2) CTypeList<T1, TYPELIST_1(T2) >
+#define TYPELIST_3(T1, T2, T3) Typelist<T1, TYPELIST_2(T2, T3) >
+
+#include <stdio.h>
+#include "CTypelist.h"
+
+
+// Шаблонный класс реализующий функционал функтора.
+// Можно поместить в класс функтор, функцию или метод класса и использовать их стандартным образом,
+// вызывая оператор ()
+template <class ResultType, class TypeList>
+class  CFunctor {
+public:
+    // Получаем каждый из типов, который может быть передан в TypeList в явном виде.
+    typedef typename GetTypeAt<TypeList, 0, NullType>::Result FirstParameterType;
+    typedef typename GetTypeAt<TypeList, 1, NullType>::Result SecondParameterType;
+    
+    template <typename Callable>
+    CFunctor( const Callable& f ) : callableObject( new CCallable<CFunctor, Callable > (f) ) {}
+    ~CFunctor() { delete callableObject; }
+    
+    // В качестве присваиваемых объектов могут быть:
+    // классы с переопределенным параметром (), методы, функции
+    template <typename Callable>
+    void operator =(const Callable& f);
+    
+    // Определяем оператор () для каждого количества аргументов меньшего фиксированного N
+    ResultType operator()() const;
+    
+    ResultType operator()( FirstParameterType parameter ) const;
+    
+    ResultType operator()( FirstParameterType firstParameter, SecondParameterType secondParameter ) const;
+  
+private:
+    // Интерфейс для вызываемого объекта, определяем для каждого из возможных количеств параметра.
+    // Список может быть расширен для поддержки необходимого количества параметров
+    template <typename ResType, typename ClassTypeList>
+    class ICallable;
+    
+    // Указатель на вызываемый объект
+    ICallable <ResultType, TypeList>*  callableObject;
+    
+    // Интерфейс для вызываемого объекта без параметров
+    template <typename ResType>
+    class ICallable<ResType, NullType> {
+        
+    public:
+        virtual ResType operator()() const = 0;
+        virtual ~ICallable() {}
+    };
+    
+    // Интерфейс для вызываемого объекта с 1 параметром
+    template <typename ResType, typename ParameterType>
+    class ICallable<ResType, TYPELIST_1( ParameterType )> {
+        
+    public:
+        virtual ResType operator()( ParameterType ) const = 0;
+        virtual ~ICallable() {}
+    };
+    
+    // Интерфейс для вызываемого объекта с 2 параметроми
+    template <typename ResType, typename ParameterTypeFirst, typename ParameterTypeSecond>
+    class ICallable<ResType, TYPELIST_2( ParameterTypeFirst, ParameterTypeSecond )> {
+        
+    public:
+        virtual ResType operator()( ParameterTypeFirst, ParameterTypeSecond ) const = 0;
+        virtual ~ICallable() {}
+    };
+    
+    // Вызываемый объект. Определяем в нем оператор () для всевозможных количеств аргумента
+    // до фиксированного N.
+    template <class ParentFunctor,  typename Callable>
+    class CCallable: public ICallable< ResultType, TypeList > {
+    public:
+        CCallable( const Callable& F ) : callableObject( F ) {}
+        
+        ResultType operator()() const {
+            return callableObject();
+        }
+        
+        ResultType operator()( typename ParentFunctor::FirstParameterType firstParameter ) const {
+            return callableObject( firstParameter );
+        }
+        
+        ResultType operator()( typename ParentFunctor::FirstParameterType firstParameter,
+                               typename ParentFunctor::SecondParameterType secondParameter ) const {
+            return callableObject( firstParameter, secondParameter );
+        }
+                                           
+    private:
+        //Фунция, функтор или метод, который мы будем вызывать
+        Callable callableObject;
+    };
+};
+
+
+
+template<class ResultType, class TypeList>
+template <typename Callable>
+void CFunctor<ResultType, TypeList>::operator =( const Callable& f )
+{
+  delete callableObject;
+  callableObject = new CCallable<CFunctor, Callable>(f);
+}
+
+template<class ResultType, class TypeList>
+ResultType CFunctor<ResultType, TypeList>::operator()() const
+{
+    return ( *callableObject )();
+}
+
+template<class ResultType, class TypeList>
+ResultType CFunctor<ResultType, TypeList>::operator()(  FirstParameterType firstParameter  ) const
+{
+    return ( *callableObject )( firstParameter );
+}
+
+template<class ResultType, class TypeList>
+ResultType CFunctor<ResultType, TypeList>::operator()( FirstParameterType firstParameter, SecondParameterType secondParameter ) const
+{
+    return ( *callableObject )( firstParameter, secondParameter );
+}
+
+#endif /* functor_hpp */
