@@ -1,4 +1,4 @@
-#include "CFunctor.hpp"
+#include "CFunctor.h"
 #include "CTypelist.h"
 
 #include <iostream>
