@@ -9,7 +9,11 @@
 
 // Шаблонный класс реализующий функционал функтора.
 // Можно поместить в класс функтор, функцию или метод класса и использовать их стандартным образом,
-// вызывая оператор ()
+// вызывая оператор (). Для обертки параметров используются TypeList.
+// Пример использования:
+// void function(int i, double d);
+// CFunctor<void, TYPELIST_2(int, double)> f(&function);
+// f(4, 4.5);
 template <class ResultType, class TypeList>
 class  CFunctor {
 public:
