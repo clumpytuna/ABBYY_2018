@@ -7,7 +7,7 @@
 // Обертки для списка параметров
 // Использовать следующим образом (пример для списка длинны два):
 // TYPELIST_2(int, double)
-#define TYPELIST_1(T1) CTypeList<T1, NullType >
+#define TYPELIST_1(T1) CTypeList<T1, NullType>
 #define TYPELIST_2(T1, T2) CTypeList<T1, TYPELIST_1(T2) >
 #define TYPELIST_3(T1, T2, T3) Typelist<T1, TYPELIST_2(T2, T3) >
 
