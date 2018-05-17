@@ -20,7 +20,6 @@
 template <class ResultType, class TypeList>
 class  CFunctor {
 public:
-  
   CFunctor() = default;
   
   // Конструктор из функции или функтора
