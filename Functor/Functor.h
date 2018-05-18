@@ -35,17 +35,6 @@ public:
     template <typename Callable>
     void operator = ( const Callable& f );
   
-    // Типы параметров функции, метода или функтора
-    typedef typename GetTypeAt<TypeList, 0, NullType>::Result FirstParameterType;
-    typedef typename GetTypeAt<TypeList, 1, NullType>::Result SecondParameterType;
-  
-    // Вызывает функцию, функтор или метод
-    ResultType operator()() const;
-  
-    ResultType operator()( FirstParameterType firstParameter ) const;
-  
-    ResultType operator()( FirstParameterType firstParameter, SecondParameterType secondParameter ) const;
-  
     // Привязывает функцию или функтор
     template <typename Callable>
     void BindFunction( const Callable& f );
@@ -53,6 +42,17 @@ public:
     // Привязывет метод класса
     template <class ObjectPtr, typename ObjectMethodPtr>
     void BindMethod( const ObjectPtr& object, ObjectMethodPtr method );
+    
+    // Типы параметров функции, метода или функтора
+    typedef typename GetTypeAt<TypeList, 0, NullType>::Result FirstParameterType;
+    typedef typename GetTypeAt<TypeList, 1, NullType>::Result SecondParameterType;
+    
+    // Вызывает функцию, функтор или метод
+    ResultType operator()() const;
+    
+    ResultType operator()( FirstParameterType firstParameter ) const;
+    
+    ResultType operator()( FirstParameterType firstParameter, SecondParameterType secondParameter ) const;
     
 private:
     // Интерфейс для вызываемого объекта.
@@ -70,7 +70,7 @@ private:
     class ICallable<ResType, NullType> {
     public:
         virtual ResType operator()() const = 0;
-        virtual ~ICallable() {}
+        virtual ~ICallable() {}ß
     };
   
     // Интерфейс для вызываемого объекта с 1 параметром
