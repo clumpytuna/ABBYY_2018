@@ -109,7 +109,7 @@ private:
       return callableObject( firstParameter );
     }
     ResultType operator()( typename ParentFunctor::FirstParameterType firstParameter,
-        typename ParentFunctor::SecondParameterType secondParameter ) const
+            typename ParentFunctor::SecondParameterType secondParameter ) const
     {
         return callableObject( firstParameter, secondParameter );
     }
@@ -141,7 +141,7 @@ private:
             return ( ( *object ).*method )( firstParameter );
         }
         ResultType operator()( typename ParentFunctor::FirstParameterType firstParameter,
-            typename ParentFunctor::SecondParameterType secondParameter ) const
+                typename ParentFunctor::SecondParameterType secondParameter ) const
         {
             return ( ( *object ).*method )( firstParameter, secondParameter );
         }
