@@ -89,7 +89,7 @@ int main()
     // Демонстрация привязки метода к CFunctor
     Object object;
     
-    // 1) Можно создать объект, а затем воспользоваться методом BindMethod для привзяки метода
+    // 1) Можно создать объект, а затем воспользоваться методом BindMethod для привязки метода
     CFunctor<void, NullType> action;
     action.BindMethod(&object, &Object::DoNothing);
     action();
