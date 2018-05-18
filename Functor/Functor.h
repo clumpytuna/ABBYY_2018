@@ -70,7 +70,7 @@ private:
     class ICallable<ResType, NullType> {
     public:
         virtual ResType operator()() const = 0;
-        virtual ~ICallable() {}ß
+        virtual ~ICallable() {};
     };
   
     // Интерфейс для вызываемого объекта с 1 параметром
