@@ -4,7 +4,7 @@
 #ifndef TypeList_h
 #define TypeList_h
 
-// Список типов. Класс предназначен для хранения в типов явном виде
+// Список типов. Класс предназначен для хранения типов в явном виде
 template <class H, class T>
 class CTypeList {
 public:
